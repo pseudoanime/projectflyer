@@ -31,6 +31,7 @@ class FlyersController extends Controller
     	Alert::message('Message', 'Optional Title');
 
     	return view('flyers.create');
+    	
     }
 
     /**
