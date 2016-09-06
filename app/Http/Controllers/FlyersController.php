@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Alert;
 use App\Flyer;
 use App\Http\Requests;
 use App\Http\Requests\FlyerRequest;
@@ -27,6 +28,7 @@ class FlyersController extends Controller
      */
     public function create()
     {
+    	Alert::message('Message', 'Optional Title');
 
     	return view('flyers.create');
     }
@@ -41,6 +43,8 @@ class FlyersController extends Controller
     {
 
     	Flyer::create($request->all());
+
+        flash("Flyer successfully created");
 
     	return redirect()->back();
 
