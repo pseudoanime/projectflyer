@@ -8,6 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="/css/app.css">
 		<link rel="stylesheet" href="/css/libs.css">
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/dropzone.css">
 	</head>
 	<body>
 	   <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -36,5 +37,6 @@
 		</div>
 	</body>
 	<script type="text/javascript" src="/js/libs.js"></script>
+	@yield('scripts.footer')
 	@include('flash')
 </html>

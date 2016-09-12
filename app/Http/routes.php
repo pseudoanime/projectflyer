@@ -15,4 +15,12 @@ Route::get('/', function () {
     return view('pages.home');
 });
 
+Route::post('/foobar', function () {
+    return "test";
+} );
+
 Route::resource('flyers', 'FlyersController');
+
+Route::get('{postcode}/{street}', 'FlyersController@show');
+
+Route::post('{postcode}/{street}/photos', 'FlyersController@addPhoto');

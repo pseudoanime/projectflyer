@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Photo;
 use Illuminate\Database\Eloquent\Model;
 
 class Flyer extends Model
@@ -20,5 +21,32 @@ class Flyer extends Model
     public function photos()
     {
     	return $this->hasMany('App\Photo');
+    }
+
+    /**
+     * getPriceAttribute 
+     * @param  [type] $price [description]
+     * @return [type]        [description]
+     */
+    public function getPriceAttribute($price)
+    {
+    	return "$" . number_format($price);
+    }
+
+    /**
+     * scopeLocatedAt 
+     * 
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function scopeLocatedAt($query, $zip, $street)
+    {
+    	$street = str_replace("-", " ", $street);
+
+    	return static::where('postcode', $zip)->where('street', $street)->first();
+    }
+
+    public function addPhoto(Photo $photo)
+    {
+    	$this->photos()->save($photo);
     }
 }

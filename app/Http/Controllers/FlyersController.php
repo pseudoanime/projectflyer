@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Alert;
 use App\Flyer;
+use App\Photo;
 use App\Http\Requests;
 use App\Http\Requests\FlyerRequest;
 use App\Http\Utilities\Country;
+use Log;
 
 class FlyersController extends Controller
 {
@@ -28,8 +30,7 @@ class FlyersController extends Controller
      */
     public function create()
     {
-    	Alert::message('Message', 'Optional Title');
-
+    	
     	return view('flyers.create');
     	
     }
@@ -45,7 +46,7 @@ class FlyersController extends Controller
 
     	Flyer::create($request->all());
 
-        flash("Flyer successfully created");
+        Alert::success('Success!', 'Your Flyer has been created');
 
     	return redirect()->back();
 
@@ -57,9 +58,13 @@ class FlyersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($zip, $street)
     {
-        //
+        Log::debug(__METHOD__ . " : bof");
+
+        $flyer = Flyer::locatedAt($zip,$street);
+
+        return view('flyers.show', compact('flyer'));
     }
 
     /**
@@ -95,4 +100,22 @@ class FlyersController extends Controller
     {
         //
     }
+
+    public function addPhoto($postcode, $street, Request $request)
+    {
+
+        $this->validate($request, [
+            'photo' =>  'required|mimes:jpg,png,bmp,jpeg'
+        ]);
+
+       $file =$request->file('photo');
+
+       $photo = Photo::fromForm($file);
+       
+       $flyer = Flyer::locatedAt($postcode, $street)->addPhoto($photo);
+
+       // $flyer->addPhoto();
+
+       // $flyer->photos()->create(['path' => "\\flyers\photos\\$fileName"]);
+   }
 }
