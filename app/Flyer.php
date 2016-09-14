@@ -42,7 +42,7 @@ class Flyer extends Model
     {
     	$street = str_replace("-", " ", $street);
 
-    	return static::where('postcode', $zip)->where('street', $street)->first();
+    	return static::where('postcode', $zip)->where('street', $street)->firstOrFail();
     }
 
     public function addPhoto(Photo $photo)

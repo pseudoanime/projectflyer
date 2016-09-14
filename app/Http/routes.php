@@ -19,8 +19,12 @@ Route::post('/foobar', function () {
     return "test";
 } );
 
-Route::resource('flyers', 'FlyersController');
+Route::resource('flyer', 'FlyersController');
+
+Route::auth();
 
 Route::get('{postcode}/{street}', 'FlyersController@show');
 
 Route::post('{postcode}/{street}/photos', 'FlyersController@addPhoto');
+
+Route::get('/home', 'HomeController@index');

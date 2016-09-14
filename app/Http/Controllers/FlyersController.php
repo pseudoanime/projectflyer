@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Alert;
+use App\Events\PhotoHasBeenAdded;
 use App\Flyer;
 use App\Photo;
 use App\Http\Requests;
@@ -13,6 +15,14 @@ use Log;
 
 class FlyersController extends Controller
 {
+    /**
+     * constructor makes sure the user is authenticated to acess
+     */
+    public function __construct()
+    {
+       $this->middleware('auth', ["except" => ["show"]]);
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -43,6 +53,7 @@ class FlyersController extends Controller
      */
     public function store(FlyerRequest $request)
     {
+        Log::debug(__METHOD__ . " : bof");
 
     	Flyer::create($request->all());
 
@@ -108,14 +119,15 @@ class FlyersController extends Controller
             'photo' =>  'required|mimes:jpg,png,bmp,jpeg'
         ]);
 
-       $file =$request->file('photo');
-
-       $photo = Photo::fromForm($file);
+        $photo = $this->makePhoto($request->file('photo'));
        
        $flyer = Flyer::locatedAt($postcode, $street)->addPhoto($photo);
 
-       // $flyer->addPhoto();
+       event(new PhotoHasBeenAdded);
+   }
 
-       // $flyer->photos()->create(['path' => "\\flyers\photos\\$fileName"]);
+   public function makePhoto(UploadedFile $file)
+   {
+       return Photo::named($file->getClientOriginalName())->move($file);
    }
 }

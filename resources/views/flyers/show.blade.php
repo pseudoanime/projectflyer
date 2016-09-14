@@ -4,7 +4,7 @@
 
 	<div class="row">
 
-		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 			
 		
 			<h1>{{$flyer->street}}</h1>
@@ -19,12 +19,16 @@
 
 		</div>
 
-		<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 gallery">
 
-			@foreach($flyer->photos as $photo)
-
-				<img src={{$photo->path}}>
-
+			@foreach($flyer->photos->chunk(4) as $set)
+				<div class="row">
+					@foreach($set as $photo)
+						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 gallery-image">
+							<img src="{{Request::root()}}\{{$photo->thumbnail_path}}">
+						</div>
+					@endforeach
+				</div>
 			@endforeach
 			
 		</div>
