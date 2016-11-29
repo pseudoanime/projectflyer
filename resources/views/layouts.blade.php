@@ -29,7 +29,13 @@
 	            <li><a href="#contact">Contact</a></li>
 	          </ul>
 	          <ul class="nav navbar-nav navbar-right">
-              <li><a href="/logout">Logout</a></li>
+              <li>
+              @if(auth()->check())
+              <a href="/logout">Logout</a>
+              @else
+              <a href="/login">Login</a>
+              @endif
+              </li>
             </ul>
 	        </div><!--/.nav-collapse -->
 	      </div>

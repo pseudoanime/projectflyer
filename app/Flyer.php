@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Flyer extends Model
 {
 
-	protected $fillable = ['street', 'postcode', 'city', 'country', 'state', 'description', 'price'];
+	protected $fillable = ['street', 'postcode', 'city', 'country', 'state', 'description', 'price', 'user_id'];
 
 	/**
 	 * photos

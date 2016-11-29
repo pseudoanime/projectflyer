@@ -19,9 +19,9 @@ Route::post('/foobar', function () {
     return "test";
 } );
 
-Route::resource('flyer', 'FlyersController');
-
 Route::auth();
+
+Route::resource('flyer', 'FlyersController');
 
 Route::get('{postcode}/{street}', 'FlyersController@show');
 

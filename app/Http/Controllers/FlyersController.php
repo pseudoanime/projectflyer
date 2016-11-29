@@ -55,7 +55,15 @@ class FlyersController extends Controller
     {
         Log::debug(__METHOD__ . " : bof");
 
-    	Flyer::create($request->all());
+        $data = $request->all();
+
+        $data["user_id"] = auth()->user()->id;
+
+    	$flyer = Flyer::create($data);
+
+        // $flyer->user_id = auth()->user()->id;
+
+        // $flyer->save();
 
         Alert::success('Success!', 'Your Flyer has been created');
 

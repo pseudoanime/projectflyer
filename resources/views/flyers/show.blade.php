@@ -1,3 +1,4 @@
+
 @extends('layouts')
 
 @section('content')
@@ -30,19 +31,20 @@
 					@endforeach
 				</div>
 			@endforeach
+
+			@if(Auth::check() && (Auth::user()->owns($flyer)))
+				<hr>
+				{!! Form::open(array("url" => "/$flyer->postcode/$flyer->street/photos", 'class' => 'dropzone', 'id' => "addPhotosForm")) !!}
+
+					{{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
+
+
+				{!! Form::close() !!}
+			@endif
 			
 		</div>
 
 	</div>
-
-	<h2>Add your photos</h2>
-
-	{!! Form::open(array("url" => "/$flyer->postcode/$flyer->street/photos", 'class' => 'dropzone', 'id' => "addPhotosForm")) !!}
-
-		{{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
-
-
-	{!! Form::close() !!}
 
 @stop
 

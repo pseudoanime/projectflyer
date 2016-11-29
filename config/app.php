@@ -150,6 +150,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Clockwork\Support\Laravel\ClockworkServiceProvider::class,
+
 
 
         /*
@@ -209,6 +211,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Alert' => UxWeb\SweetAlert\SweetAlert::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Clockwork' => 'Clockwork\Support\Laravel\Facade',
 
     ],
 
