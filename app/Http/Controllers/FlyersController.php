@@ -9,6 +9,7 @@ use App\Events\PhotoHasBeenAdded;
 use App\Flyer;
 use App\Photo;
 use App\Http\Requests;
+use App\Http\Requests\addPhotoRequest;
 use App\Http\Requests\FlyerRequest;
 use App\Http\Utilities\Country;
 use Log;
@@ -120,18 +121,14 @@ class FlyersController extends Controller
         //
     }
 
-    public function addPhoto($postcode, $street, Request $request)
+    public function addPhoto($postcode, $street, addPhotoRequest $request)
     {
 
-        $this->validate($request, [
-            'photo' =>  'required|mimes:jpg,png,bmp,jpeg'
-        ]);
-
-        $photo = $this->makePhoto($request->file('photo'));
+        $photo = Photo::fromFile($request->file('photo'));
        
-       $flyer = Flyer::locatedAt($postcode, $street)->addPhoto($photo);
+        $flyer = Flyer::locatedAt($postcode, $street)->addPhoto($photo);
 
-       event(new PhotoHasBeenAdded);
+       // event(new PhotoHasBeenAdded);
    }
 
    public function makePhoto(UploadedFile $file)
